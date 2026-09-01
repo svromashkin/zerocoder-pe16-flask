@@ -8,6 +8,7 @@ function setText(id, value) {
 
 async function refresh() {
   setText("browserTime", new Date().toLocaleString("ru-RU"));
+  setText("href", location.href);
   try {
     const r = await fetch("/api/status", { cache: "no-store" });
     const d = await r.json();
@@ -17,6 +18,7 @@ async function refresh() {
     setText("system", d.system);
     setText("python", d.python);
     setText("docker", d.in_docker ? "да" : "нет");
+    setText("wsgi", d.wsgi || "неизвестно");
     setText("serverTime", d.server_time);
   } catch (e) {
     setText("serverTime", "нет связи с сервером: " + e.message);

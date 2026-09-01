@@ -3,11 +3,11 @@ import os
 import platform
 import socket
 
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory
 
 app = Flask(__name__, static_folder="public", static_url_path="")
 
-VERSION = "1.0"
+VERSION = "1.1"
 TITLE = "QuietPod deploy demo"
 
 
@@ -27,6 +27,7 @@ def status():
         python=platform.python_version(),
         server_time=now.strftime("%Y-%m-%d %H:%M:%S %z"),
         in_docker=os.path.exists("/.dockerenv"),
+        wsgi=request.environ.get("SERVER_SOFTWARE", "неизвестно"),
     )
 
 
